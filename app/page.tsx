@@ -8,7 +8,7 @@ export default function Home() {
   const count = useSelector((state: RootState) => state.counter.value);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center ">
       <h1 className="text-2xl font-bold">Counter: {count}</h1>
       <div className="flex gap-4 mt-4">
         <button onClick={() => dispatch(increment())} className="px-4 py-2 bg-green-500 text-white rounded">
