@@ -12,20 +12,22 @@ const BaseModal = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center  bg-black opacity-75 "
+      className="absolute inset-0 before:absolute before:inset-0 before:bg-black before:opacity-50 w-full h-screen justify-center items-center"
       onClick={() => dispatch(closeModal())}
     >
-      <div
-        className="bg-[#fff] p-4 pt-2 rounded-sm shadow-lg min-w-[400px] relative"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          className=" absolute to-0 right-1 cursor-pointer "
-          onClick={() => dispatch(closeModal())}
+      <div className="h-screen w-full flex justify-center items-center relative">
+        <div
+          className=" p-4 pt-2 rounded-sm shadow-lg  inset-1 w-[400px]  bg-white relative"
+          onClick={(e) => e.stopPropagation()}
         >
-          <IoMdClose />
-        </button>
-        <div>{children}</div>
+          <button
+            className=" absolute to-0 right-1 cursor-pointer "
+            onClick={() => dispatch(closeModal())}
+          >
+            <IoMdClose />
+          </button>
+          <div>{children}</div>
+        </div>
       </div>
     </div>
   );
