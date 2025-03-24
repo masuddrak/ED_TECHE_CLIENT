@@ -30,6 +30,7 @@ export const sendVerificationCode = async (email: string) => {
 };
 
 export const verifyVerificationCode = async (email: string, providedCode: string) => {
+  console.log(email,providedCode)
   const response = await axios.patch('auth/verification-code-verify', { email, providedCode });
   return response.data;
 };

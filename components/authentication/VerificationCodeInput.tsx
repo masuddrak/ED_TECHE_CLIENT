@@ -1,14 +1,22 @@
-import { useState, useRef,  } from "react";
+import { useState, useRef } from "react";
 import BaseInput from "../base/BaseInput";
 import { Button } from "../ui/button";
+import { verifyVerificationCode } from "@/lib/auth/api";
+import { useRouter } from "next/navigation";
 
-const VerificationCodeInput = () => {
+import { useDispatch } from "react-redux";
+import { closeModal } from "@/store/slices/modal/modalSlice";
+
+interface Props {
+  getEmail: string;
+}
+const VerificationCodeInput: React.FC<Props> = ({ getEmail }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const length = 6;
   const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  console.log(inputRefs.current);
-
   const handleChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
     const newOtp = [...otp];
@@ -29,12 +37,18 @@ const VerificationCodeInput = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (otp.some((digit) => digit === "")) {
       alert("Please enter a valid OTP.");
       return;
     }
-    console.log(otp.join(""));
+    console.log(getEmail);
+    const data = await verifyVerificationCode(getEmail, otp.join(""));
+    if (data.success) {
+      dispatch(closeModal())
+      router.push("/dashboard");
+    }
+    console.log(data, "verify data");
   };
 
   return (
